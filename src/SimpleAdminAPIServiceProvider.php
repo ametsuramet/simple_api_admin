@@ -1,9 +1,9 @@
 <?php
 
-namespace Amet\SimpleORM;
+namespace Amet\SimpleAdminAPI;
 
 use Illuminate\Support\ServiceProvider;
-use Amet\SimpleORM\Commands\GeneratorApiAdmin;
+use Amet\SimpleAdminAPI\Commands\GeneratorApiAdmin;
 
 class SimpleAdminAPIServiceProvider extends ServiceProvider
 {

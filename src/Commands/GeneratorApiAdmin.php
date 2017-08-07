@@ -1,6 +1,6 @@
 <?php
 
-namespace Amet\SimpleORM\Commands;
+namespace Amet\SimpleAdminAPI\Commands;
 
 use File;
 use Illuminate\Console\Command;

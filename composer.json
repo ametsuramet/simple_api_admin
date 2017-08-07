@@ -1,0 +1,22 @@
+{
+    "name": "ametsuramet/amet_simple_admin_api",
+    "description": "Simple Admin & API Generator",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "amet suramet",
+            "email": "ametsuramet@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Amet\\SimpleAdminAPI\\": "src"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.0",
+        "ametsuramet/simple_orm": "^1.2"
+    }
+}

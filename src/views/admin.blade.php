@@ -24,7 +24,10 @@
 
     <!-- Morris Chart Css-->
     <link href="/vendor/simple_admin_api/plugins/morrisjs/morris.css" rel="stylesheet" />
-
+    
+    <!-- Bootstrap Select Css -->
+    <link href="/vendor/simple_admin_api/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+    
     <!-- Custom Css -->
     <link href="/vendor/simple_admin_api/css/style.css" rel="stylesheet">
 

@@ -17,12 +17,12 @@
                                         <i class="material-icons">more_vert</i>
                                     </a>
                                     <ul class="dropdown-menu pull-right">
-                                        <li><a href="$link_add">Add</a></li>
+                                        <li><a href="$link_add"><i class="material-icons">create</i>Add</a></li>
                                     </ul>
                                 </li>
                             </ul>
                         </div>
-                        <div class="body table-responsive">
+                        <div class="body table-responsive" style="min-height: 400px">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>

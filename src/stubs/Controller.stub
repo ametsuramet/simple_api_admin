@@ -38,7 +38,7 @@ class sampleController extends Controller
     public function store(Request $request)
     {
         $samples = (new Model)->insert($request->all());
-        return back();
+        return redirect(route('prefix.samples.index'));
     }
 
     /**
@@ -75,7 +75,7 @@ class sampleController extends Controller
     public function update(Request $request, $id)
     {
         $samples = (new Model)->update($id,$request->all());
-        return back();
+        return redirect(route('prefix.samples.index'));
     }
 
     /**
@@ -87,6 +87,6 @@ class sampleController extends Controller
     public function destroy($id)
     {
         (new Model)->delete($id);
-        return back();
+        return redirect(route('prefix.samples.index'));
     }
 }

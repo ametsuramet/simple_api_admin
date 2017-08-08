@@ -14,22 +14,22 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
     <!-- Bootstrap Core Css -->
-    <link href="/vendor/simple_api_admin/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/vendor/simple_admin_api/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- Waves Effect Css -->
-    <link href="/vendor/simple_api_admin/plugins/node-waves/waves.css" rel="stylesheet" />
+    <link href="/vendor/simple_admin_api/plugins/node-waves/waves.css" rel="stylesheet" />
 
     <!-- Animation Css -->
-    <link href="/vendor/simple_api_admin/plugins/animate-css/animate.css" rel="stylesheet" />
+    <link href="/vendor/simple_admin_api/plugins/animate-css/animate.css" rel="stylesheet" />
 
     <!-- Morris Chart Css-->
-    <link href="/vendor/simple_api_admin/plugins/morrisjs/morris.css" rel="stylesheet" />
+    <link href="/vendor/simple_admin_api/plugins/morrisjs/morris.css" rel="stylesheet" />
 
     <!-- Custom Css -->
-    <link href="/vendor/simple_api_admin/css/style.css" rel="stylesheet">
+    <link href="/vendor/simple_admin_api/css/style.css" rel="stylesheet">
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-    <link href="/vendor/simple_api_admin/css/themes/all-themes.css" rel="stylesheet" />
+    <link href="/vendor/simple_admin_api/css/themes/all-themes.css" rel="stylesheet" />
 </head>
 
 <body class="theme-red">
@@ -50,55 +50,55 @@
         </div>
     </div>
     <!-- #END# Page Loader -->
-    @include('simple_api_admin.header')
+    @include('simple_admin_api.header')
     <section>
-        @include('simple_api_admin.sidebar')
+        @include('simple_admin_api.sidebar')
         
     </section>
 
     @yield('content')
 
     <!-- Jquery Core Js -->
-    <script src="/vendor/simple_api_admin/plugins/jquery/jquery.min.js"></script>
+    <script src="/vendor/simple_admin_api/plugins/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core Js -->
-    <script src="/vendor/simple_api_admin/plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="/vendor/simple_admin_api/plugins/bootstrap/js/bootstrap.js"></script>
 
     <!-- Select Plugin Js -->
-    <script src="/vendor/simple_api_admin/plugins/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="/vendor/simple_admin_api/plugins/bootstrap-select/js/bootstrap-select.js"></script>
 
     <!-- Slimscroll Plugin Js -->
-    <script src="/vendor/simple_api_admin/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <script src="/vendor/simple_admin_api/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
 
     <!-- Waves Effect Plugin Js -->
-    <script src="/vendor/simple_api_admin/plugins/node-waves/waves.js"></script>
+    <script src="/vendor/simple_admin_api/plugins/node-waves/waves.js"></script>
 
     <!-- Jquery CountTo Plugin Js -->
-    <script src="/vendor/simple_api_admin/plugins/jquery-countto/jquery.countTo.js"></script>
+    <script src="/vendor/simple_admin_api/plugins/jquery-countto/jquery.countTo.js"></script>
 
     <!-- Morris Plugin Js -->
-    <script src="/vendor/simple_api_admin/plugins/raphael/raphael.min.js"></script>
-    <script src="/vendor/simple_api_admin/plugins/morrisjs/morris.js"></script>
+    <script src="/vendor/simple_admin_api/plugins/raphael/raphael.min.js"></script>
+    <script src="/vendor/simple_admin_api/plugins/morrisjs/morris.js"></script>
 
     <!-- ChartJs -->
-    <script src="/vendor/simple_api_admin/plugins/chartjs/Chart.bundle.js"></script>
+    <script src="/vendor/simple_admin_api/plugins/chartjs/Chart.bundle.js"></script>
 
     <!-- Flot Charts Plugin Js -->
-    <script src="/vendor/simple_api_admin/plugins/flot-charts/jquery.flot.js"></script>
-    <script src="/vendor/simple_api_admin/plugins/flot-charts/jquery.flot.resize.js"></script>
-    <script src="/vendor/simple_api_admin/plugins/flot-charts/jquery.flot.pie.js"></script>
-    <script src="/vendor/simple_api_admin/plugins/flot-charts/jquery.flot.categories.js"></script>
-    <script src="/vendor/simple_api_admin/plugins/flot-charts/jquery.flot.time.js"></script>
+    <script src="/vendor/simple_admin_api/plugins/flot-charts/jquery.flot.js"></script>
+    <script src="/vendor/simple_admin_api/plugins/flot-charts/jquery.flot.resize.js"></script>
+    <script src="/vendor/simple_admin_api/plugins/flot-charts/jquery.flot.pie.js"></script>
+    <script src="/vendor/simple_admin_api/plugins/flot-charts/jquery.flot.categories.js"></script>
+    <script src="/vendor/simple_admin_api/plugins/flot-charts/jquery.flot.time.js"></script>
 
     <!-- Sparkline Chart Plugin Js -->
-    <script src="/vendor/simple_api_admin/plugins/jquery-sparkline/jquery.sparkline.js"></script>
+    <script src="/vendor/simple_admin_api/plugins/jquery-sparkline/jquery.sparkline.js"></script>
 
     <!-- Custom Js -->
-    <script src="/vendor/simple_api_admin/js/admin.js"></script>
-    <script src="/vendor/simple_api_admin/js/pages/index.js"></script>
+    <script src="/vendor/simple_admin_api/js/admin.js"></script>
+    <script src="/vendor/simple_admin_api/js/pages/index.js"></script>
 
     <!-- Demo Js -->
-    <script src="/vendor/simple_api_admin/js/demo.js"></script>
+    <script src="/vendor/simple_admin_api/js/demo.js"></script>
 </body>
 
 </html>

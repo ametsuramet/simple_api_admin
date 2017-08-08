@@ -3,7 +3,7 @@
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="/vendor/simple_orm/images/user.png" width="48" height="48" alt="User" />
+                    <img src="/vendor/simple_admin_api/images/user.png" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
@@ -27,7 +27,7 @@
             <div class="menu">
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
-                    @include('simple_orm.menu')
+                    @include('simple_admin_api.menu')
                 </ul>
             </div>
             <!-- #Menu -->

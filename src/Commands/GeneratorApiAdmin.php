@@ -115,16 +115,24 @@ class GeneratorApiAdmin extends Command
             $default_key = $get_model->getDefaultKey();
             $table = $get_model->getTableName();
             $columns = [];
-            $this->info("Select Type for ".$to_generate." Model");
-            foreach ($get_column as $key => $column) {
-                if($column != "created_at" && $column != "updated_at" && $column != "deleted_at" && $column != $default_key) 
-                {
-                    $type = $this->choice("Selete type of $column name",
-                        ["text","number","password","email","select","radio","checkbox","textarea","file","date","color"]);
-                    $columns[] = [
-                        'name' => $column,
-                        'type' => $type,
-                        ];
+            if ($this->task != "API") {
+                $this->info("Select Type for ".$to_generate." Model");
+                foreach ($get_column as $key => $column) {
+                    if($column != "created_at" && $column != "updated_at" && $column != "deleted_at" && $column != $default_key) 
+                    {
+                        $id = $file_name;
+                        $type = $this->choice("Selete type of $column",
+                            ["text","number","password","email","select","radio","checkbox","textarea","file","date","color"]);
+                        if ($type == "textarea") {
+                            $id = $this->choice("Selete type of $column editor",
+                            ["ckeditor","tinymce","no-editor"]);
+                        }
+                        $columns[] = [
+                            'name' => $column,
+                            'type' => $type,
+                            'id' => $id,
+                            ];
+                    }
                 }
             }
             $models_params[] = [
@@ -141,6 +149,47 @@ class GeneratorApiAdmin extends Command
         $this->models_params = $models_params;
     }
 
+    private function generateAPI()
+    {
+        foreach ($this->models_params as $key => $models_params) {
+            $route_template = "Route::resource('".str_plural(strtolower(snake_case($models_params['model'])))."', 'SimpleAPI\\".ucfirst(camel_case($models_params['model'])).'Controller'."', ['as' => 'simple_api']);";
+            if ($this->framework == "lumen") {
+                $route_template = '$app->resource("'.str_plural(strtolower(snake_case($models_params['model']))).'", "\App\Http\Controllers\SimpleAPI\\'.ucfirst(camel_case($models_params['model']))."Controller".'",["as" => "simple_api"]);';
+            }
+            $route_path = base_path().'/routes/api.php';
+            // if (preg_match(pattern, subject))
+            if (!version_compare($this->version, '5.2')) {
+                $route_path = app_path().'/Http/routes.php';
+            }
+            $template = $this->getStubPath().'/ControllerApi.stub';
+            $file_name = ucfirst(camel_case($models_params['model'])).'Controller'.'.php';
+            $path_controller = app()->path().'/Http/Controllers/SimpleAPI/';
+            try {
+                $fh = fopen($template,'r+');
+                $content = "";
+                $line_number = 1;
+                while(!feof($fh)) {
+                    $line = fgets($fh);
+                    $line = str_replace("sampleController", ucfirst(camel_case($models_params['model'])).'Controller', $line);
+                    $line = str_replace("samples",str_plural(strtolower(snake_case($models_params['model']))), $line);
+                    $line = str_replace("Model",ucfirst(camel_case($models_params['model'])), $line);
+                    $content .= $line;
+                    $line_number++;
+                }
+                
+                fclose($fh);
+                
+                file_put_contents($path_controller.$file_name, $content);
+                $this->info('Created Controller: '.$file_name);
+
+                
+                file_put_contents($route_path, PHP_EOL.$route_template.PHP_EOL , FILE_APPEND | LOCK_EX);
+                $this->info('Add Route: '.$route_path);
+            } catch (\Exception $e) {
+                $this->error($e->getMessage());
+            }
+        }
+    }
     private function generateAdmin()
     {
         foreach ($this->models_params as $key => $models_params) {
@@ -149,7 +198,7 @@ class GeneratorApiAdmin extends Command
             $models_params['admin_params']['controller_path'];
             $route_template = "Route::resource('simple_admin/".str_plural(strtolower(snake_case($models_params['model'])))."', 'SimpleAdmin\\".ucfirst(camel_case($models_params['model'])).'Controller'."', ['as' => 'simple_admin_api']);";
             if ($this->framework == "lumen") {
-                $route_template = '$app->resource("'.str_plural(strtolower(snake_case($models_params['model']))).'", "\App\Http\Controllers\SimpleAdmin\\'.ucfirst(camel_case($models_params['model']))."Controller".'",["as" => "simple_admin_api"]);';
+                $route_template = '$app->resource("simple_admin/'.str_plural(strtolower(snake_case($models_params['model']))).'", "\App\Http\Controllers\SimpleAdmin\\'.ucfirst(camel_case($models_params['model']))."Controller".'",["as" => "simple_admin_api"]);';
             }
             $route_path = base_path().'/routes/web.php';
             // if (preg_match(pattern, subject))
@@ -181,14 +230,7 @@ class GeneratorApiAdmin extends Command
                 file_put_contents($path_controller.$file_name, $content);
                 $this->info('Created Controller: '.$file_name);
 
-                // file_put_contents($path_view.'/'.'index.blade.php', "open file : app/Http/Controllers/".ucfirst(camel_case($models_params['model'])).'Controller'.'.php');
-                // file_put_contents($path_view.'/'.'create.blade.php', "open file : app/Http/Controllers/".ucfirst(camel_case($models_params['model'])).'Controller'.'.php');
-                // file_put_contents($path_view.'/'.'show.blade.php', "open file : app/Http/Controllers/".ucfirst(camel_case($models_params['model'])).'Controller'.'.php');
-                // file_put_contents($path_view.'/'.'edit.blade.php', "open file : app/Http/Controllers/".ucfirst(camel_case($models_params['model'])).'Controller'.'.php');
-                // $this->info('Created View: '.$path_view.'/'.'index.blade.php');
-                // $this->info('Created View: '.$path_view.'/'.'create.blade.php');
-                // $this->info('Created View: '.$path_view.'/'.'show.blade.php');
-                // $this->info('Created View: '.$path_view.'/'.'edit.blade.php');
+                
                 file_put_contents($route_path, PHP_EOL.$route_template.PHP_EOL , FILE_APPEND | LOCK_EX);
                 $this->info('Add Route: '.$route_path);
                 $this->generateView($models_params);
@@ -257,7 +299,7 @@ class GeneratorApiAdmin extends Command
                         $line .="\t\t\t\t\t\t\t".'<div class="form-group form-float">'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t".'<div class="form-line">'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", "", $column['name'])).'</h3>'.PHP_EOL;
-                        $line .="\t\t\t\t\t\t\t\t\t".'<textarea rows="9" name="'.$column['name'].'"  id="'.$column['name'].'" class="form-control" />{!! $'.$models_params['alias'].'->'.$column['name'].' !!}</textarea>'.PHP_EOL;
+                        $line .="\t\t\t\t\t\t\t\t\t".'<textarea rows="9" name="'.$column['name'].'"  id="'.$column['id'].'" class="form-control" />{!! $'.$models_params['alias'].'->'.$column['name'].' !!}</textarea>'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t".'</div>'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t".'</div>'.PHP_EOL;
                     } else
@@ -322,7 +364,7 @@ class GeneratorApiAdmin extends Command
                         $line .="\t\t\t\t\t\t\t".'<div class="form-group form-float">'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t".'<div class="form-line">'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", "", $column['name'])).'</h3>'.PHP_EOL;
-                        $line .="\t\t\t\t\t\t\t\t\t".'<textarea rows="9" name="'.$column['name'].'"  id="'.$column['name'].'" class="form-control" /></textarea>'.PHP_EOL;
+                        $line .="\t\t\t\t\t\t\t\t\t".'<textarea rows="9" name="'.$column['name'].'"  id="'.$column['id'].'" class="form-control" /></textarea>'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t".'</div>'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t".'</div>'.PHP_EOL;
                     } else
@@ -423,10 +465,7 @@ class GeneratorApiAdmin extends Command
 
         file_put_contents($path_view.'/'.'index.blade.php', $content);
     }
-    private function generateAPI()
-    {
-
-    }
+    
     /**
      * Get the console command arguments.
      *

@@ -245,6 +245,7 @@ class GeneratorApiAdmin extends Command
         $this->generateIndexView($models_params);
         $this->generateCreateView($models_params);
         $this->generateEditView($models_params);
+        $this->generateShowView($models_params);
         $this->addMenu($models_params);
     }
 

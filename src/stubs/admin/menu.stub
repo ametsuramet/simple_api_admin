@@ -1,6 +1,6 @@
 <li>
-	<a href="/admin/samples">
+	<a href="{!! route('prefix.samples.index') !!}">
 	    <i class="material-icons">layers</i>
-	    <span>Model</span>
+	    <span>$MODEL</span>
 	</a>
 </li>

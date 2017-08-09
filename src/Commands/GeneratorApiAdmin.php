@@ -245,7 +245,27 @@ class GeneratorApiAdmin extends Command
         $this->generateIndexView($models_params);
         $this->generateCreateView($models_params);
         $this->generateEditView($models_params);
-        $this->generateShowView($models_params);
+        $this->addMenu($models_params);
+    }
+
+    private function addMenu($models_params)
+    {
+        if ($this->confirm("Would you like add ".$models_params['model']." link to sidebar menu")) {
+            $template = $this->getStubPath().'/admin/menu.stub';
+            $fh = fopen($template,'r+');
+            $content = "";
+            $line_number = 1;
+            while(!feof($fh)) {
+                $line = fgets($fh);
+                $line = str_replace('$MODEL', $models_params['model'], $line);
+                $line = str_replace('prefix', "simple_admin_api", $line);
+                $line = str_replace('samples', $models_params['alias'], $line);
+                $content .= $line;
+                $line_number++;
+            }
+            fclose($fh);
+            file_put_contents(resource_path('views/simple_admin_api/menu.blade.php'), PHP_EOL.$content, FILE_APPEND | LOCK_EX);
+        }
     }
 
     private function generateShowView($models_params)

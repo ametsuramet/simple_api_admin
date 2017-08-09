@@ -1,3 +1,5 @@
+@extends('simple_admin_api::admin')
+@section('content')
 <section class="content">
         <div class="container-fluid">
             <div class="block-header">
@@ -309,3 +311,14 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('script')
+<!-- Flot Charts Plugin Js -->
+    <script src="/vendor/simple_admin_api/plugins/flot-charts/jquery.flot.js"></script>
+    <script src="/vendor/simple_admin_api/plugins/flot-charts/jquery.flot.resize.js"></script>
+    <script src="/vendor/simple_admin_api/plugins/flot-charts/jquery.flot.pie.js"></script>
+    <script src="/vendor/simple_admin_api/plugins/flot-charts/jquery.flot.categories.js"></script>
+    <script src="/vendor/simple_admin_api/plugins/flot-charts/jquery.flot.time.js"></script>
+<script src="/vendor/simple_admin_api/js/pages/index.js"></script>
+@endsection

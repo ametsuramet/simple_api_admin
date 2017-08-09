@@ -33,6 +33,8 @@
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="/vendor/simple_admin_api/css/themes/all-themes.css" rel="stylesheet" />
+    @yield('style')
+
 </head>
 
 <body class="theme-red">
@@ -86,12 +88,7 @@
     <!-- ChartJs -->
     <script src="/vendor/simple_admin_api/plugins/chartjs/Chart.bundle.js"></script>
 
-    <!-- Flot Charts Plugin Js -->
-    {{-- <script src="/vendor/simple_admin_api/plugins/flot-charts/jquery.flot.js"></script>
-    <script src="/vendor/simple_admin_api/plugins/flot-charts/jquery.flot.resize.js"></script>
-    <script src="/vendor/simple_admin_api/plugins/flot-charts/jquery.flot.pie.js"></script>
-    <script src="/vendor/simple_admin_api/plugins/flot-charts/jquery.flot.categories.js"></script>
-    <script src="/vendor/simple_admin_api/plugins/flot-charts/jquery.flot.time.js"></script> --}}
+    
 
     <!-- Sparkline Chart Plugin Js -->
     <script src="/vendor/simple_admin_api/plugins/jquery-sparkline/jquery.sparkline.js"></script>
@@ -134,6 +131,8 @@
             tinyMCE.baseURL = '/vendor/simple_admin_api/plugins/tinymce';
         });
     </script>
+
+    @yield('script')
     <!-- Demo Js -->
     <script src="/vendor/simple_admin_api/js/demo.js"></script>
 </body>

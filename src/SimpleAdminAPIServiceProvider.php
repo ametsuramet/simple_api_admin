@@ -14,8 +14,9 @@ class SimpleAdminAPIServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot() {
-         $this->loadViewsFrom(__DIR__.'/views', 'simple_admin_api');
-         $this->publishes([
+        $this->loadRoutesFrom(__DIR__.'/routes.php');
+        $this->loadViewsFrom(__DIR__.'/views', 'simple_admin_api');
+        $this->publishes([
             __DIR__ . '/views/assets' => public_path('vendor/simple_admin_api'),
             __DIR__ . '/views/templates' => resource_path('views/simple_admin_api'),
         ], 'simple_admin_api');

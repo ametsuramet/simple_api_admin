@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 */
 class LoginController extends Controller
 {
-	protected $redirect = '/simple_admin/dashboard';
+	protected $redirect;
 
 
 
@@ -36,13 +36,16 @@ class LoginController extends Controller
 		\Auth::logout();
 		\Session::flush();
 
-		return redirect('simple_admin/login');
+		return redirect(env('APP_ADMIN_PREFIX','simple_admin').'/login');
 	}
 
 	protected function postLogin(Request $request)
 	{
 		$remember = $request->has('rememberme') ? true : false;
 		if (\Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+			if (!$this->redirect) {
+				$this->redirect = env('APP_ADMIN_PREFIX','simple_admin').'/dashboard';
+			}
             return redirect()->intended($this->redirect);
         } else {
         	return back()->withErrors('Login Failed, please check your credential');
@@ -66,7 +69,7 @@ class LoginController extends Controller
 	    	$input = $request->all();
 	    	$input['password'] = bcrypt($request->password);
 	        \App\User::create($input);
-	        return redirect('simple_admin/login');
+	        return redirect(env('APP_ADMIN_PREFIX','simple_admin').'/login');
 	    }
 		    
 		return back()->withErrors($validator)->withInput();

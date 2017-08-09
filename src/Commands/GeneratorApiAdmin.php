@@ -152,9 +152,9 @@ class GeneratorApiAdmin extends Command
     private function generateAPI()
     {
         foreach ($this->models_params as $key => $models_params) {
-            $route_template = "Route::resource('".str_plural(strtolower(snake_case($models_params['model'])))."', 'SimpleAPI\\".ucfirst(camel_case($models_params['model'])).'Controller'."', ['as' => 'simple_api']);";
+            $route_template = "Route::resource('".str_plural(strtolower(snake_case($models_params['model'])))."', 'SimpleAPI\\".ucfirst(camel_case($models_params['model'])).'Controller'."', ['as' => env('APP_API_PREFIX','simple_api')]);";
             if ($this->framework == "lumen") {
-                $route_template = '$app->resource("'.str_plural(strtolower(snake_case($models_params['model']))).'", "\App\Http\Controllers\SimpleAPI\\'.ucfirst(camel_case($models_params['model']))."Controller".'",["as" => "simple_api"]);';
+                $route_template = '$app->resource("'.str_plural(strtolower(snake_case($models_params['model']))).'", "SimpleAPI\\'.ucfirst(camel_case($models_params['model']))."Controller".'",["as" => env("APP_API_PREFIX","simple_api")]);';
             }
             $route_path = base_path().'/routes/api.php';
             // if (preg_match(pattern, subject))
@@ -196,9 +196,9 @@ class GeneratorApiAdmin extends Command
             // print_r($models_params);
             //generate controller
             $models_params['admin_params']['controller_path'];
-            $route_template = "Route::resource('simple_admin/".str_plural(strtolower(snake_case($models_params['model'])))."', 'SimpleAdmin\\".ucfirst(camel_case($models_params['model'])).'Controller'."', ['as' => 'simple_admin_api']);";
+            $route_template = "Route::resource(env('APP_ADMIN_PREFIX','simple_admin').'/".str_plural(strtolower(snake_case($models_params['model'])))."', 'SimpleAdmin\\".ucfirst(camel_case($models_params['model'])).'Controller'."', ['as' => env('APP_ADMIN_PREFIX','simple_admin_api')]);";
             if ($this->framework == "lumen") {
-                $route_template = '$app->resource("simple_admin/'.str_plural(strtolower(snake_case($models_params['model']))).'", "\App\Http\Controllers\SimpleAdmin\\'.ucfirst(camel_case($models_params['model']))."Controller".'",["as" => "simple_admin_api"]);';
+                $route_template = '$app->resource(env("APP_ADMIN_PREFIX","simple_admin")."/'.str_plural(strtolower(snake_case($models_params['model']))).'", "SimpleAdmin\\'.ucfirst(camel_case($models_params['model']))."Controller".'",["as" => env("APP_ADMIN_PREFIX","simple_admin_api")]);';
             }
             $route_path = base_path().'/routes/web.php';
             // if (preg_match(pattern, subject))
@@ -245,6 +245,7 @@ class GeneratorApiAdmin extends Command
         $this->generateIndexView($models_params);
         $this->generateCreateView($models_params);
         $this->generateEditView($models_params);
+        $this->generateShowView($models_params);
         $this->addMenu($models_params);
     }
 
@@ -279,7 +280,6 @@ class GeneratorApiAdmin extends Command
         while(!feof($fh)) {
             $line = fgets($fh);
             $line = str_replace('$MODEL', "Show ". $models_params['model'], $line);
-            $line = str_replace('prefix', "simple_admin_api", $line);
             $line = str_replace('samples', $models_params['alias'], $line);
             $line = str_replace('default_key', $models_params['default_key'], $line);
             if ($line_number == 27) {
@@ -312,7 +312,7 @@ class GeneratorApiAdmin extends Command
             $line = fgets($fh);
             $line = str_replace('$MODEL', "Create ". $models_params['model'], $line);
             if ($line_number == 25) {
-                $line .="\t\t\t\t\t\t".'<form method="post" action="{!! route("simple_admin_api.'.$models_params['alias'].'.update", ["'.$models_params['default_key'].'" => $'.$models_params['alias'].'->'.$models_params['default_key'].']) !!}">'.PHP_EOL;
+                $line .="\t\t\t\t\t\t".'<form method="post" action="{!! route(env(\'APP_ADMIN_PREFIX\',\'simple_admin\').".'.$models_params['alias'].'.update", ["'.$models_params['default_key'].'" => $'.$models_params['alias'].'->'.$models_params['default_key'].']) !!}">'.PHP_EOL;
                 $line .="\t\t\t\t\t\t\t".'<input name="_method" type="hidden" value="PUT"><input name="_token" type="hidden" value="{!! csrf_token() !!}">'.PHP_EOL;
                 foreach ($models_params['column'] as $key => $column) {
                     if ($column['type'] == "textarea") {
@@ -377,7 +377,7 @@ class GeneratorApiAdmin extends Command
             $line = fgets($fh);
             $line = str_replace('$MODEL', "Create ". $models_params['model'], $line);
             if ($line_number == 25) {
-                $line .="\t\t\t\t\t\t".'<form method="post" action="{!! route("simple_admin_api.'.$models_params['alias'].'.store") !!}">'.PHP_EOL;
+                $line .="\t\t\t\t\t\t".'<form method="post" action="{!! route(env(\'APP_ADMIN_PREFIX\',\'simple_admin\').".'.$models_params['alias'].'.store") !!}">'.PHP_EOL;
                 $line .="\t\t\t\t\t\t\t".'<input name="_token" type="hidden" value="{!! csrf_token() !!}">'.PHP_EOL;
                 foreach ($models_params['column'] as $key => $column) {
                     if ($column['type'] == "textarea") {
@@ -439,7 +439,7 @@ class GeneratorApiAdmin extends Command
         while(!feof($fh)) {
             $line = fgets($fh);
             $line = str_replace('$MODEL', $models_params['model'], $line);
-            $line = str_replace('$link_add', "{!! route('simple_admin_api.".$models_params['alias'].".create') !!}", $line);
+            $line = str_replace('$link_add', "{!! route(env('APP_ADMIN_PREFIX','simple_admin').'.".$models_params['alias'].".create') !!}", $line);
             $line = str_replace("samples",str_plural(strtolower(snake_case($models_params['model']))), $line);
             $line = str_replace("Model",ucfirst(camel_case($models_params['model'])), $line);
             if ($line_number == 28) {
@@ -448,7 +448,7 @@ class GeneratorApiAdmin extends Command
                 }
             }
             if ($line_number == 32) {
-                $form_delete = '<form method="POST" action="{!! route("simple_admin_api.'.$models_params['alias'].'.destroy", [\''.$models_params['default_key'].'\' => $'.str_singular($models_params['alias']).'->'.$models_params['default_key'].']) !!}" accept-charset="UTF-8"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="{!! csrf_token() !!}">';
+                $form_delete = '<form method="POST" action="{!! route(env(\'APP_ADMIN_PREFIX\',\'simple_admin\').".'.$models_params['alias'].'.destroy", [\''.$models_params['default_key'].'\' => $'.str_singular($models_params['alias']).'->'.$models_params['default_key'].']) !!}" accept-charset="UTF-8"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="{!! csrf_token() !!}">';
                 $menu_row  = "\t\t\t\t\t\t\t\t\t\t\t".'<ul class="header-dropdown m-r--5" style="list-style-type: none;float: right;">'.PHP_EOL;
                 $menu_row .= "\t\t\t\t\t\t\t\t\t\t\t".$form_delete.PHP_EOL;
                 $menu_row .= "\t\t\t\t\t\t\t\t\t\t\t\t".'<li class="dropdown">'.PHP_EOL;
@@ -456,8 +456,8 @@ class GeneratorApiAdmin extends Command
                 $menu_row .= "\t\t\t\t\t\t\t\t\t\t\t\t\t\t".'<i class="material-icons">more_vert</i>'.PHP_EOL;
                 $menu_row .= "\t\t\t\t\t\t\t\t\t\t\t\t\t".'</a>'.PHP_EOL;
                 $menu_row .= "\t\t\t\t\t\t\t\t\t\t\t\t\t".'<ul class="dropdown-menu pull-right">'.PHP_EOL;
-                $menu_row .= "\t\t\t\t\t\t\t\t\t\t\t\t\t\t".'<li><a href="{!! route("simple_admin_api.'.$models_params['alias'].'.show", [\''.$models_params['default_key'].'\' => $'.str_singular($models_params['alias']).'->'.$models_params['default_key'].']) !!}"><i class="material-icons">remove_red_eye</i>Show</a></li>'.PHP_EOL;
-                $menu_row .= "\t\t\t\t\t\t\t\t\t\t\t\t\t\t".'<li><a href="{!! route("simple_admin_api.'.$models_params['alias'].'.edit", [\''.$models_params['default_key'].'\' => $'.str_singular($models_params['alias']).'->'.$models_params['default_key'].']) !!}"><i class="material-icons">mode_edit</i>Edit</a></li>'.PHP_EOL;
+                $menu_row .= "\t\t\t\t\t\t\t\t\t\t\t\t\t\t".'<li><a href="{!! route(env(\'APP_ADMIN_PREFIX\',\'simple_admin\').".'.$models_params['alias'].'.show", [\''.$models_params['default_key'].'\' => $'.str_singular($models_params['alias']).'->'.$models_params['default_key'].']) !!}"><i class="material-icons">remove_red_eye</i>Show</a></li>'.PHP_EOL;
+                $menu_row .= "\t\t\t\t\t\t\t\t\t\t\t\t\t\t".'<li><a href="{!! route(env(\'APP_ADMIN_PREFIX\',\'simple_admin\').".'.$models_params['alias'].'.edit", [\''.$models_params['default_key'].'\' => $'.str_singular($models_params['alias']).'->'.$models_params['default_key'].']) !!}"><i class="material-icons">mode_edit</i>Edit</a></li>'.PHP_EOL;
                 $menu_row .= "\t\t\t\t\t\t\t\t\t\t\t\t\t\t".'<li>'.PHP_EOL;
                 $menu_row .= "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t".'<a onclick="$(this).closest(\'form\').submit()"><i class="material-icons">delete</i>Delete</a>'.PHP_EOL;
                 $menu_row .= "\t\t\t\t\t\t\t\t\t\t\t\t\t\t".'</li>'.PHP_EOL;

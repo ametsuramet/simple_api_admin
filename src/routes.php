@@ -1,6 +1,6 @@
 <?php
 
-Route::middleware(['web','guest'])->prefix('simple_admin')->group(function () {
+Route::middleware(['web','guest'])->prefix(env('APP_ADMIN_PREFIX','simple_admin'))->group(function () {
     Route::get('/login', '\Amet\SimpleAdminAPI\Controllers\LoginController@getLogin');
     Route::get('/registration', '\Amet\SimpleAdminAPI\Controllers\LoginController@getRegistration');
     Route::get('/forgot', '\Amet\SimpleAdminAPI\Controllers\LoginController@getForgot');
@@ -8,7 +8,7 @@ Route::middleware(['web','guest'])->prefix('simple_admin')->group(function () {
     Route::post('/registration', '\Amet\SimpleAdminAPI\Controllers\LoginController@postRegistration');
 });
 
-Route::middleware(['web','auth'])->prefix('simple_admin')->group(function () {
+Route::middleware(['web','auth'])->prefix(env('APP_ADMIN_PREFIX','simple_admin'))->group(function () {
     Route::get('/dashboard', '\Amet\SimpleAdminAPI\Controllers\DashboardController@index');
     Route::get('/logout', '\Amet\SimpleAdminAPI\Controllers\LoginController@getLogout');
 });

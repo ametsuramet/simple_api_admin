@@ -1,5 +1,5 @@
 <li>
-	<a href="{!! route('prefix.samples.index') !!}">
+	<a href="{!! route(env('APP_ADMIN_PREFIX','simple_admin').'.samples.index') !!}">
 	    <i class="material-icons">layers</i>
 	    <span>$MODEL</span>
 	</a>

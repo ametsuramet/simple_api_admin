@@ -6,7 +6,7 @@ this package is require [ametsuramet/simple_orm](https://github.com/ametsuramet/
 Begin by pulling in the package through Composer.
 
 ```bash
-composer require ametsuramet/amet_simple_admin_api
+composer require ametsuramet/amet_simple_admin_api:dev-master
 ```
 
 Or add in the `require` key of `composer.json` file manually

@@ -38,6 +38,8 @@
                         Enter your email address that you used to register. We'll send you an email with your username and a
                         link to reset your password.
                     </div>
+                    @include('simple_admin_api::flash_message')
+                    
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">email</i>

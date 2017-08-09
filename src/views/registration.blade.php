@@ -37,12 +37,13 @@
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                     
                     <div class="msg">Register a new membership</div>
+                    @include('simple_admin_api::flash_message')
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">person</i>
                         </span>
                         <div class="form-line">
-                            <input type="text" class="form-control" name="namesurname" placeholder="Name Surname" required autofocus>
+                            <input type="text" class="form-control" value="{!! old('name') !!}" name="name" placeholder="Name Surname" required autofocus>
                         </div>
                     </div>
                     <div class="input-group">
@@ -50,7 +51,7 @@
                             <i class="material-icons">email</i>
                         </span>
                         <div class="form-line">
-                            <input type="email" class="form-control" name="email" placeholder="Email Address" required>
+                            <input type="email" class="form-control" value="{!! old('email') !!}" name="email" placeholder="Email Address" required>
                         </div>
                     </div>
                     <div class="input-group">
@@ -58,7 +59,7 @@
                             <i class="material-icons">lock</i>
                         </span>
                         <div class="form-line">
-                            <input type="password" class="form-control" name="password" minlength="6" placeholder="Password" required>
+                            <input type="password" class="form-control"  name="password" minlength="6" placeholder="Password" required>
                         </div>
                     </div>
                     <div class="input-group">
@@ -66,7 +67,7 @@
                             <i class="material-icons">lock</i>
                         </span>
                         <div class="form-line">
-                            <input type="password" class="form-control" name="confirm" minlength="6" placeholder="Confirm Password" required>
+                            <input type="password" class="form-control" name="password_confirmation" minlength="6" placeholder="Confirm Password" required>
                         </div>
                     </div>
                     <div class="form-group">

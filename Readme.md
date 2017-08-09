@@ -27,16 +27,24 @@ Register the ServiceProvider in `config/app.php`
 ],
 ```
 
+## Publish Vendor
+```bash
+php artisan vendor:publish --tag=simple_admin_api --force
+```
 
-## Defining Models
+## Usage
+Before you generate admin views or api please make sure you have any model that generated with [ametsuramet/simple_orm](https://github.com/ametsuramet/simple_orm), you can use interactive mode:
 
-The easiest way to create a ADMIN & API is using the `simple_admin_api:generate` Artisan command:
+```bash
+php artisan simple_orm:interactive
+```
+
+an easiest way to create a ADMIN & API is using the `simple_admin_api:generate` Artisan command:
 
 ```bash
 php artisan simple_admin_api:generate
 ```
 
-## Publish Vendor
-```bash
-php artisan vendor:publish --tag=simple_admin_api --force
-```
+## Credits
+* [AdminBSB](https://github.com/gurayyarar/AdminBSBMaterialDesign)
+

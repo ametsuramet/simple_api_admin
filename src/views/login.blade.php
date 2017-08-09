@@ -36,6 +36,8 @@
                 <form id="sign_in" method="POST">
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                     <div class="msg">Sign in to start your session</div>
+                    @include('simple_admin_api::flash_message')
+                    
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">person</i>

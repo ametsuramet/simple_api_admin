@@ -5,6 +5,7 @@ Route::middleware(['web','guest'])->prefix('simple_admin')->group(function () {
     Route::get('/registration', '\Amet\SimpleAdminAPI\Controllers\LoginController@getRegistration');
     Route::get('/forgot', '\Amet\SimpleAdminAPI\Controllers\LoginController@getForgot');
     Route::post('/login', '\Amet\SimpleAdminAPI\Controllers\LoginController@postLogin');
+    Route::post('/registration', '\Amet\SimpleAdminAPI\Controllers\LoginController@postRegistration');
 });
 
 Route::middleware(['web','auth'])->prefix('simple_admin')->group(function () {

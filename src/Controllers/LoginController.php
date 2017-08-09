@@ -45,8 +45,32 @@ class LoginController extends Controller
 		if (\Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             return redirect()->intended($this->redirect);
         } else {
-        	return back();
+        	return back()->withErrors('Login Failed, please check your credential');
         }
+	}
+
+	protected function postRegistration(Request $request)
+	{
+		
+	    $rules = [
+	        'name' => 'required',
+	        'email' => 'required|email|unique:users,email',
+	        'password' => 'required|min:6|confirmed',
+        	'password_confirmation' => 'required|min:6'
+	    ];
+
+	     $validator = \Validator::make($request->all(), $rules);
+    
+
+	    if ($validator->passes()) {
+	    	$input = $request->all();
+	    	$input['password'] = bcrypt($request->password);
+	        \App\User::create($input);
+	        return redirect('simple_admin/login');
+	    }
+		    
+		return back()->withErrors($validator)->withInput();
+
 	}
 	
 }

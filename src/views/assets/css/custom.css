@@ -1,0 +1,8 @@
+.pagination > a,
+.pagination > span {
+	display:inline-block;
+	text-align:center;
+	padding:5px;
+    min-width:30px;
+	border: 1px solid #dedede;
+}

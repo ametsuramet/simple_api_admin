@@ -291,7 +291,7 @@ class GeneratorApiAdmin extends Command
                 foreach ($models_params['column'] as $key => $column) {
                     $line .="\t\t\t\t\t\t\t".'<div class="form-group form-float">'.PHP_EOL;
                     $line .="\t\t\t\t\t\t\t\t".'<div class="form-line">'.PHP_EOL;
-                    $line .="\t\t\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", "", $column['name'])).'</h3>'.PHP_EOL;
+                    $line .="\t\t\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", " ", $column['name'])).'</h3>'.PHP_EOL;
                     $line .="\t\t\t\t\t\t\t\t\t".'<p>{!! $'.$models_params['alias'].'->'.$column['name'].' !!}</>'.PHP_EOL;
                     $line .="\t\t\t\t\t\t\t\t".'</div>'.PHP_EOL;
                     $line .="\t\t\t\t\t\t\t".'</div>'.PHP_EOL;
@@ -321,15 +321,16 @@ class GeneratorApiAdmin extends Command
                 $line .="\t\t\t\t\t\t\t".'<input name="_method" type="hidden" value="PUT"><input name="_token" type="hidden" value="{!! csrf_token() !!}">'.PHP_EOL;
                 foreach ($models_params['column'] as $key => $column) {
                     if ($column['type'] == "textarea") {
+                        $class = "form-control ".$column['id'];
                         $line .="\t\t\t\t\t\t\t".'<div class="form-group form-float">'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t".'<div class="form-line">'.PHP_EOL;
-                        $line .="\t\t\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", "", $column['name'])).'</h3>'.PHP_EOL;
-                        $line .="\t\t\t\t\t\t\t\t\t".'<textarea rows="9" name="'.$column['name'].'"  id="'.$column['id'].'" class="form-control" />{!! $'.$models_params['alias'].'->'.$column['name'].' !!}</textarea>'.PHP_EOL;
+                        $line .="\t\t\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", " ", $column['name'])).'</h3>'.PHP_EOL;
+                        $line .="\t\t\t\t\t\t\t\t\t".'<textarea rows="9" name="'.$column['name'].'" class="'.$class.'" />{!! $'.$models_params['alias'].'->'.$column['name'].' !!}</textarea>'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t".'</div>'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t".'</div>'.PHP_EOL;
                     } else
                     if ($column['type'] == 'radio' || $column['type'] == 'checkbox') {
-                        $line .="\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", "", $column['name'])).'</h3>'.PHP_EOL;
+                        $line .="\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", " ", $column['name'])).'</h3>'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t".'<div class="demo-radio-button">'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t\t".'<input name="'.$column['name'].'" type="'.$column['type'].'" id="'.$column['type'].'_1" checked />'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t\t".'<label for="'.$column['type'].'_1">'.ucfirst($column['type']).' - 1</label>'.PHP_EOL;
@@ -340,14 +341,14 @@ class GeneratorApiAdmin extends Command
                     if ($column['type'] != "select") {
                         $line .="\t\t\t\t\t\t\t".'<div class="form-group form-float">'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t".'<div class="form-line">'.PHP_EOL;
-                        $line .="\t\t\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", "", $column['name'])).'</h3>'.PHP_EOL;
+                        $line .="\t\t\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", " ", $column['name'])).'</h3>'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t\t".'<input type="'.$column['type'].'" name="'.$column['name'].'"  id="'.$column['name'].'" class="form-control" value="{!! $'.$models_params['alias'].'->'.$column['name'].' !!}">'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t".'</div>'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t".'</div>'.PHP_EOL;
                     } else {
                         $line .="\t\t\t\t\t\t\t".'<div class="form-group form-float">'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t".'<div class="form-line">'.PHP_EOL;
-                        $line .="\t\t\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", "", $column['name'])).'</h3>'.PHP_EOL;
+                        $line .="\t\t\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", " ", $column['name'])).'</h3>'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t\t".'<select name="'.$column['name'].'" id="'.$column['name'].'" class="form-control">'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t\t\t".'<option value="1">Value 1</option>'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t\t\t".'<option value="2">Value 2</option>'.PHP_EOL;
@@ -386,15 +387,16 @@ class GeneratorApiAdmin extends Command
                 $line .="\t\t\t\t\t\t\t".'<input name="_token" type="hidden" value="{!! csrf_token() !!}">'.PHP_EOL;
                 foreach ($models_params['column'] as $key => $column) {
                     if ($column['type'] == "textarea") {
+                        $class = "form-control ".$column['id'];
                         $line .="\t\t\t\t\t\t\t".'<div class="form-group form-float">'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t".'<div class="form-line">'.PHP_EOL;
-                        $line .="\t\t\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", "", $column['name'])).'</h3>'.PHP_EOL;
-                        $line .="\t\t\t\t\t\t\t\t\t".'<textarea rows="9" name="'.$column['name'].'"  id="'.$column['id'].'" class="form-control" /></textarea>'.PHP_EOL;
+                        $line .="\t\t\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", " ", $column['name'])).'</h3>'.PHP_EOL;
+                        $line .="\t\t\t\t\t\t\t\t\t".'<textarea rows="9" name="'.$column['name'].'" class="'.$class.'"  /></textarea>'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t".'</div>'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t".'</div>'.PHP_EOL;
                     } else
                     if ($column['type'] == 'radio' || $column['type'] == 'checkbox') {
-                        $line .="\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", "", $column['name'])).'</h3>'.PHP_EOL;
+                        $line .="\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", " ", $column['name'])).'</h3>'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t".'<div class="demo-radio-button">'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t\t".'<input name="'.$column['name'].'" type="'.$column['type'].'" id="'.$column['type'].'_1" checked />'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t\t".'<label for="'.$column['type'].'_1">'.ucfirst($column['type']).' - 1</label>'.PHP_EOL;
@@ -405,14 +407,14 @@ class GeneratorApiAdmin extends Command
                     if ($column['type'] != "select") {
                         $line .="\t\t\t\t\t\t\t".'<div class="form-group form-float">'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t".'<div class="form-line">'.PHP_EOL;
-                        $line .="\t\t\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", "", $column['name'])).'</h3>'.PHP_EOL;
+                        $line .="\t\t\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", " ", $column['name'])).'</h3>'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t\t".'<input type="'.$column['type'].'" name="'.$column['name'].'"  id="'.$column['name'].'" class="form-control">'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t".'</div>'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t".'</div>'.PHP_EOL;
                     } else {
                         $line .="\t\t\t\t\t\t\t".'<div class="form-group form-float">'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t".'<div class="form-line">'.PHP_EOL;
-                        $line .="\t\t\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", "", $column['name'])).'</h3>'.PHP_EOL;
+                        $line .="\t\t\t\t\t\t\t\t\t".'<h3 class="card-inside-title">'.title_case(str_replace("_", " ", $column['name'])).'</h3>'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t\t".'<select name="'.$column['name'].'" id="'.$column['name'].'" class="form-control">'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t\t\t".'<option value="1">Value 1</option>'.PHP_EOL;
                         $line .="\t\t\t\t\t\t\t\t\t\t".'<option value="2">Value 2</option>'.PHP_EOL;
@@ -449,7 +451,7 @@ class GeneratorApiAdmin extends Command
             $line = str_replace("Model",ucfirst(camel_case($models_params['model'])), $line);
             if ($line_number == 28) {
                 foreach ($models_params['column'] as $key => $column) {
-                    $line .="\t\t\t\t\t\t\t\t\t\t"."<th>".title_case(str_replace("_", "", $column['name']))."</th>".PHP_EOL;
+                    $line .="\t\t\t\t\t\t\t\t\t\t"."<th>".title_case(str_replace("_", " ", $column['name']))."</th>".PHP_EOL;
                 }
             }
             if ($line_number == 32) {

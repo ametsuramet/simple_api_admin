@@ -30,6 +30,7 @@
     
     <!-- Custom Css -->
     <link href="/vendor/simple_admin_api/css/style.css" rel="stylesheet">
+    <link href="/vendor/simple_admin_api/css/custom.css" rel="stylesheet">
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="/vendor/simple_admin_api/css/themes/all-themes.css" rel="stylesheet" />
@@ -106,8 +107,8 @@
         $(function () {
 
     
-            var ckeditor = document.getElementById('ckeditor');
-            if (ckeditor) {
+            var ckeditor = document.getElementsByClassName('ckeditor');
+            if (ckeditor.length) {
                 //CKEditor
                 CKEDITOR.replace('ckeditor');
                 CKEDITOR.config.height = 300;
@@ -115,7 +116,7 @@
 
             //TinyMCE
             tinymce.init({
-                selector: "textarea#tinymce",
+                selector: "textarea.tinymce",
                 theme: "modern",
                 height: 300,
                 plugins: [

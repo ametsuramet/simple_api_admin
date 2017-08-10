@@ -22,7 +22,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="body table-responsive" style="min-height: 400px">
+                        <div class="body table-responsive" style="padding-bottom: 80px">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>

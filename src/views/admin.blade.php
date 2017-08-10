@@ -34,7 +34,8 @@
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="/vendor/simple_admin_api/css/themes/all-themes.css" rel="stylesheet" />
     @yield('style')
-
+    @include('simple_admin_api.style')
+    
 </head>
 
 <body class="theme-red">
@@ -133,8 +134,11 @@
     </script>
 
     @yield('script')
+    @include('simple_admin_api.script')
+    
     <!-- Demo Js -->
     <script src="/vendor/simple_admin_api/js/demo.js"></script>
+
 </body>
 
 </html>

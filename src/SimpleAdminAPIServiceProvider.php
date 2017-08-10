@@ -4,6 +4,7 @@ namespace Amet\SimpleAdminAPI;
 
 use Illuminate\Support\ServiceProvider;
 use Amet\SimpleAdminAPI\Commands\GeneratorApiAdmin;
+use Amet\SimpleAdminAPI\Commands\RebuildMenu;
 
 class SimpleAdminAPIServiceProvider extends ServiceProvider
 {
@@ -33,10 +34,15 @@ class SimpleAdminAPIServiceProvider extends ServiceProvider
             return new GeneratorApiAdmin();
         });
 
+        $this->app->singleton('ametsuramet.simple_admin_api_rebuild_menu', function ($app) {
+            return new RebuildMenu();
+        });
+
         
 
         $this->commands([
             'ametsuramet.simple_admin_api',
+            'ametsuramet.simple_admin_api_rebuild_menu',
         ]);
     
     }
@@ -50,6 +56,7 @@ class SimpleAdminAPIServiceProvider extends ServiceProvider
     {
         return [
             'ametsuramet.simple_admin_api',
+            'ametsuramet.simple_admin_api_rebuild_menu',
         ];
     }
 }

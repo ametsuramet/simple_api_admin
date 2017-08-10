@@ -14,10 +14,10 @@ Route::middleware(['web','auth'])->prefix(env('APP_ADMIN_PREFIX','simple_admin')
 });
 
 Route::get('/login', ['as' => 'login' , function() {
-	return redirect('simple_admin/login');
+	return redirect(env('APP_ADMIN_PREFIX','simple_admin').'/login');
 }]);
 
 
 Route::get('/home', ['as' => 'home' , function() {
-	return redirect('simple_admin/dashboard');
+	return redirect(env('APP_ADMIN_PREFIX','simple_admin').'/dashboard');
 }]);

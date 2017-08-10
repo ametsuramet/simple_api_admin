@@ -45,6 +45,11 @@ an easiest way to create a ADMIN & API is using the `simple_admin_api:generate` 
 php artisan simple_admin_api:generate
 ```
 
+## Rebuild Menu Sidebar
+```bash
+php artisan simple_admin_api:rebuild_menu
+```
+
 ## Credits
 * [AdminBSB](https://github.com/gurayyarar/AdminBSBMaterialDesign)
 

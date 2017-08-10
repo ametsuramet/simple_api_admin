@@ -58,6 +58,11 @@ class GeneratorApiAdmin extends Command
         }
         if (!count($this->models)) {
             $this->error("You don't have any models");
+            if ($this->confirm('Do you want to generate Model with SIMPLE_ORM Generator')) {
+                $this->call('simple_orm:interactive');
+            } else {
+                exit;
+            }
         }
         $this->task = $this->choice('Which Task would you like to generate ?', ["Admin","API","Admin & API"]);
         $this->list_models = $this->choice('Which Models would you like to generate ?', array_merge(["All"],$this->models ));
@@ -312,7 +317,7 @@ class GeneratorApiAdmin extends Command
             $line = fgets($fh);
             $line = str_replace('$MODEL', "Create ". $models_params['model'], $line);
             if ($line_number == 25) {
-                $line .="\t\t\t\t\t\t".'<form method="post" action="{!! route(env(\'APP_ADMIN_PREFIX\',\'simple_admin\').".'.$models_params['alias'].'.update", ["'.$models_params['default_key'].'" => $'.$models_params['alias'].'->'.$models_params['default_key'].']) !!}">'.PHP_EOL;
+                $line .="\t\t\t\t\t\t".'<form enctype="multipart/form-data" method="post" action="{!! route(env(\'APP_ADMIN_PREFIX\',\'simple_admin\').".'.$models_params['alias'].'.update", ["'.$models_params['default_key'].'" => $'.$models_params['alias'].'->'.$models_params['default_key'].']) !!}">'.PHP_EOL;
                 $line .="\t\t\t\t\t\t\t".'<input name="_method" type="hidden" value="PUT"><input name="_token" type="hidden" value="{!! csrf_token() !!}">'.PHP_EOL;
                 foreach ($models_params['column'] as $key => $column) {
                     if ($column['type'] == "textarea") {
@@ -377,7 +382,7 @@ class GeneratorApiAdmin extends Command
             $line = fgets($fh);
             $line = str_replace('$MODEL', "Create ". $models_params['model'], $line);
             if ($line_number == 25) {
-                $line .="\t\t\t\t\t\t".'<form method="post" action="{!! route(env(\'APP_ADMIN_PREFIX\',\'simple_admin\').".'.$models_params['alias'].'.store") !!}">'.PHP_EOL;
+                $line .="\t\t\t\t\t\t".'<form enctype="multipart/form-data" method="post" action="{!! route(env(\'APP_ADMIN_PREFIX\',\'simple_admin\').".'.$models_params['alias'].'.store") !!}">'.PHP_EOL;
                 $line .="\t\t\t\t\t\t\t".'<input name="_token" type="hidden" value="{!! csrf_token() !!}">'.PHP_EOL;
                 foreach ($models_params['column'] as $key => $column) {
                     if ($column['type'] == "textarea") {

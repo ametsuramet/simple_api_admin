@@ -28,8 +28,7 @@
 <body class="login-page">
     <div class="login-box">
         <div class="logo">
-            <a href="javascript:void(0);">Admin<b>BSB</b></a>
-            <small>Admin BootStrap Based - Material Design</small>
+            @include('simple_admin_api.form_login')
         </div>
         <div class="card">
             <div class="body">
@@ -37,7 +36,7 @@
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                     <div class="msg">Sign in to start your session</div>
                     @include('simple_admin_api::flash_message')
-                    
+
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">person</i>

@@ -28,8 +28,7 @@
 <body class="signup-page">
     <div class="signup-box">
         <div class="logo">
-            <a href="javascript:void(0);">Admin<b>BSB</b></a>
-            <small>Admin BootStrap Based - Material Design</small>
+            @include('simple_admin_api.form_login')
         </div>
         <div class="card">
             <div class="body">
@@ -72,7 +71,7 @@
                     </div>
                     <div class="form-group">
                         <input type="checkbox" name="terms" id="terms" class="filled-in chk-col-pink">
-                        <label for="terms">I read and agree to the <a href="javascript:void(0);">terms of usage</a>.</label>
+                        <label for="terms">I read and agree to the <a data-toggle="modal" href='#term'>terms of usage</a>.</label>
                     </div>
 
                     <button class="btn btn-block btn-lg bg-pink waves-effect" type="submit">SIGN UP</button>
@@ -84,7 +83,7 @@
             </div>
         </div>
     </div>
-
+    @include('simple_admin_api.term')
     <!-- Jquery Core Js -->
     <script src="/vendor/simple_admin_api/plugins/jquery/jquery.min.js"></script>
 

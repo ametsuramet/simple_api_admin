@@ -48,14 +48,14 @@ class RebuildMenu extends Command
     	$models_to_generate = [$this->list_models];
         if ($this->list_models == "All") {
             $models_to_generate = $this->models;
+            $content  = '<li class="active">'.PHP_EOL;
+            $content .= "\t".'<a href="/{!! env(\'APP_ADMIN_PREFIX\',\'simple_admin\') !!}/dashboard">'.PHP_EOL;
+            $content .= "\t\t".'<i class="material-icons">home</i>'.PHP_EOL;
+            $content .= "\t\t".'<span>Home</span>'.PHP_EOL;
+            $content .= "\t".'</a>'.PHP_EOL;
+            $content .= '</li>'.PHP_EOL;
+            file_put_contents(resource_path('views/simple_admin_api/menu.blade.php'), PHP_EOL.$content);
         }
-        $content  = '<li class="active">';
-		$content .= "\t".'<a href="/{!! env(\'APP_ADMIN_PREFIX\',\'simple_admin\') !!}/dashboard">';
-    	$content .= "\t\t".'<i class="material-icons">home</i>';
-    	$content .= "\t\t".'<span>Home</span>';
-		$content .= "\t".'</a>';
-		$content .= '</li>';
-        file_put_contents(resource_path('views/simple_admin_api/menu.blade.php'), PHP_EOL.$content);
 
         $models_params = [];
     	foreach ($models_to_generate as $key => $model) {

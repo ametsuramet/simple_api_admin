@@ -224,6 +224,19 @@ class GeneratorApiAdmin extends Command
                     $line = str_replace("samples",str_plural(strtolower(snake_case($models_params['model']))), $line);
                     $line = str_replace("prefix",'simple_admin_api', $line);
                     $line = str_replace("Model",ucfirst(camel_case($models_params['model'])), $line);
+                    if ($models_params['model'] == "User") {
+                        $line = str_replace("rules_access",'manage_user', $line);
+                    }
+                    foreach ($models_params['column'] as $key => $column) {
+                        $file_template_flow  = "\t\t".'if ($request->'.$column['name'].') {'.PHP_EOL;
+                        $file_template_flow .= "\t\t\t".'$path = $request->'.$column['name'].'->store(\'images\', \'public\');'.PHP_EOL;
+                        $file_template_flow .= "\t\t\t".'$input[\''.$column['name'].'\'] = $path;'.PHP_EOL;
+                        $file_template_flow .= "\t\t".'}'.PHP_EOL;
+                        if ($column['type'] == "file") {
+                            $line = str_replace("//CUSTOM FLOW STORE",$line.PHP_EOL.$file_template_flow , $line);
+                            $line = str_replace("//CUSTOM FLOW UPDATE",$line.PHP_EOL.$file_template_flow , $line);
+                        }
+                    }
                     $content .= $line;
                     $line_number++;
                 }
@@ -320,6 +333,9 @@ class GeneratorApiAdmin extends Command
                 $line .="\t\t\t\t\t\t".'<form enctype="multipart/form-data" method="post" action="{!! route(env(\'APP_ADMIN_PREFIX\',\'simple_admin\').".'.$models_params['alias'].'.update", ["'.$models_params['default_key'].'" => $'.$models_params['alias'].'->'.$models_params['default_key'].']) !!}">'.PHP_EOL;
                 $line .="\t\t\t\t\t\t\t".'<input name="_method" type="hidden" value="PUT"><input name="_token" type="hidden" value="{!! csrf_token() !!}">'.PHP_EOL;
                 foreach ($models_params['column'] as $key => $column) {
+                    if ($column['name'] == "remember_token") {
+                        
+                    } else
                     if ($column['type'] == "textarea") {
                         $class = "form-control ".$column['id'];
                         $line .="\t\t\t\t\t\t\t".'<div class="form-group form-float">'.PHP_EOL;
@@ -386,6 +402,9 @@ class GeneratorApiAdmin extends Command
                 $line .="\t\t\t\t\t\t".'<form enctype="multipart/form-data" method="post" action="{!! route(env(\'APP_ADMIN_PREFIX\',\'simple_admin\').".'.$models_params['alias'].'.store") !!}">'.PHP_EOL;
                 $line .="\t\t\t\t\t\t\t".'<input name="_token" type="hidden" value="{!! csrf_token() !!}">'.PHP_EOL;
                 foreach ($models_params['column'] as $key => $column) {
+                    if ($column['name'] == "remember_token") {
+                        
+                    } else
                     if ($column['type'] == "textarea") {
                         $class = "form-control ".$column['id'];
                         $line .="\t\t\t\t\t\t\t".'<div class="form-group form-float">'.PHP_EOL;
@@ -451,7 +470,11 @@ class GeneratorApiAdmin extends Command
             $line = str_replace("Model",ucfirst(camel_case($models_params['model'])), $line);
             if ($line_number == 28) {
                 foreach ($models_params['column'] as $key => $column) {
-                    $line .="\t\t\t\t\t\t\t\t\t\t"."<th>".title_case(str_replace("_", " ", $column['name']))."</th>".PHP_EOL;
+                    if ($column['name'] == "password" || $column['name'] == "remember_token" ) {
+
+                    } else {
+                        $line .="\t\t\t\t\t\t\t\t\t\t"."<th>".title_case(str_replace("_", " ", $column['name']))."</th>".PHP_EOL;
+                    }
                 }
             }
             if ($line_number == 32) {
@@ -476,7 +499,11 @@ class GeneratorApiAdmin extends Command
                 $line .="\t\t\t\t\t\t\t\t"."@foreach($".$models_params['alias']." as $".str_singular($models_params['alias']).")".PHP_EOL;
                 $line .="\t\t\t\t\t\t\t\t\t"."<tr>".PHP_EOL;
                 foreach ($models_params['column'] as $key => $column) {
-                    $line .="\t\t\t\t\t\t\t\t\t\t"."<td>{!! $".str_singular($models_params['alias']).'->'.$column['name']." !!}</td>".PHP_EOL;
+                    if ($column['name'] == "password" || $column['name'] == "remember_token" ) {
+
+                    } else {
+                        $line .="\t\t\t\t\t\t\t\t\t\t"."<td>{!! $".str_singular($models_params['alias']).'->'.$column['name']." !!}</td>".PHP_EOL;
+                    }
                 }
                 $line .="\t\t\t\t\t\t\t\t\t\t"."<td>".PHP_EOL;
                 $line .= $menu_row;

@@ -16,10 +16,12 @@ class SimpleAdminAPIServiceProvider extends ServiceProvider
      */
     public function boot() {
         $this->loadRoutesFrom(__DIR__.'/routes.php');
+        $this->loadMigrationsFrom(__DIR__.'/migrations');
         $this->loadViewsFrom(__DIR__.'/views', 'simple_admin_api');
         $this->publishes([
             __DIR__ . '/views/assets' => public_path('vendor/simple_admin_api'),
             __DIR__ . '/views/templates' => resource_path('views/simple_admin_api'),
+            __DIR__.'/config/simple_admin_api.php' => config_path('simple_admin_api.php'),
         ], 'simple_admin_api');
     }
 
@@ -38,7 +40,11 @@ class SimpleAdminAPIServiceProvider extends ServiceProvider
             return new RebuildMenu();
         });
 
+        $this->mergeConfigFrom(
+            __DIR__.'/config/simple_admin_api.php', 'simple_admin_api'
+        );
         
+        $this->app['router']->aliasMiddleware('simple.admin',\Amet\SimpleAdminAPI\Middleware\SimpleAdminMiddleware::class);
 
         $this->commands([
             'ametsuramet.simple_admin_api',

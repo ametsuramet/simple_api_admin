@@ -42,6 +42,16 @@ class LoginController extends Controller
 	protected function postLogin(Request $request)
 	{
 		$remember = $request->has('rememberme') ? true : false;
+		$user = \App\User::where('email',$request->email)->first();
+		if ($user) {
+			if ($user->status != 1) {
+				return back()->withErrors('Login Failed, user is inactive')->withInput();
+			}
+
+			if (!in_array($user->role, config('simple_admin_api.admin_login_access'))) {
+				return back()->withErrors('Login Failed, user has no access to login')->withInput();
+			}
+		}
 		if (\Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
 			if (!$this->redirect) {
 				$this->redirect = env('APP_ADMIN_PREFIX','simple_admin').'/dashboard';
@@ -62,7 +72,7 @@ class LoginController extends Controller
         	'password_confirmation' => 'required|min:6'
 	    ];
 
-	     $validator = \Validator::make($request->all(), $rules);
+	    $validator = \Validator::make($request->all(), $rules);
     
 
 	    if ($validator->passes()) {

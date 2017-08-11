@@ -32,6 +32,10 @@ Register the ServiceProvider in `config/app.php`
 php artisan vendor:publish --tag=simple_admin_api --force
 ```
 
+edit your admin preference in `config/simple_admin_api.php`
+
+
+
 ## Usage
 Before you generate admin views or api please make sure you have any model that generated with [ametsuramet/simple_orm](https://github.com/ametsuramet/simple_orm), you can use interactive mode:
 
